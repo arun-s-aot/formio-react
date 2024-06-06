@@ -1,4 +1,4 @@
-import { Utils as FormioUtils } from '@formio/js';
+import { Utils as FormioUtils } from '@arun-s-aot/formiojs/lib';
 import _get from 'lodash/get';
 import _isFunction from 'lodash/isFunction';
 import _isObject from 'lodash/isObject';

@@ -24,7 +24,7 @@ const FormBuilder = (props) => {
 		if (onChange && typeof onChange === 'function') {
 			builderRef.current.instance.form.components =
 				iterateConditionsAndSetLogic(
-					builderRef.current.instance.form.components,
+					builderRef.current.instance.form.components
 				);
 			// console.log('updated components -->',builderRef.current.instance.form.components);
 			const schema = {

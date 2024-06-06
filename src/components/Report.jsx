@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import EventEmitter from 'eventemitter2';
 import _isEqual from 'lodash/isEqual';
-import { Formio } from '@formio/js';
+import { Formio } from '@arun-s-aot/formiojs/lib';
 const FormioReport = Formio.Report;
 
 /**
