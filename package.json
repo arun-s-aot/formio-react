@@ -1,6 +1,6 @@
 {
-	"name": "@formio/react",
-	"version": "5.3.0",
+	"name": "@arun-s-aot/formio-react",
+	"version": "1.0.24",
 	"description": "React renderer for form.io forms.",
 	"main": "lib/index.js",
 	"scripts": {
@@ -23,7 +23,7 @@
 		"Forms",
 		"react-component"
 	],
-	"author": "Randall Knutson <randall@form.io>",
+	"author": "Arun S",
 	"license": "MIT",
 	"bugs": {
 		"url": "https://github.com/formio/react-formio/issues"
@@ -41,7 +41,7 @@
 		"@babel/core": "^7.23.7",
 		"@babel/preset-env": "^7.23.8",
 		"@babel/preset-react": "^7.23.3",
-		"@formio/js": "^5.0.0-rc.33",
+		"@arun-s-aot/formiojs": "^1.0.5",
 		"babel-loader": "^9.1.3",
 		"chai": "^4.3.6",
 		"enzyme": "^3.11.0",
@@ -71,7 +71,7 @@
 		"lib"
 	],
 	"peerDependencies": {
-		"@formio/js": "^5.0.0-rc.33",
+		"@arun-s-aot/formiojs": "^1.0.5",
 		"react": "^15.3.0 || ^16.0.0 || ^17.0.0 || ^18.1.0",
 		"react-dom": "^15.3.0 || ^16.0.0 || ^17.0.0 || ^18.1.0"
 	}

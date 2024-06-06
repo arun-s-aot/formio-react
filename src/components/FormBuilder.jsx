@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useCallback, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
-import { FormBuilder as FormioFormBuilder } from '@formio/js';
+import { FormBuilder as FormioFormBuilder } from '@arun-s-aot/formiojs/lib';
 
 const FormBuilder = (props) => {
 	const { options = {}, Builder = FormioFormBuilder, form } = props;
@@ -22,6 +22,11 @@ const FormBuilder = (props) => {
 	const onChange = () => {
 		const { onChange } = props;
 		if (onChange && typeof onChange === 'function') {
+			builderRef.current.instance.form.components =
+				iterateConditionsAndSetLogic(
+					builderRef.current.instance.form.components,
+				);
+			// console.log('updated components -->',builderRef.current.instance.form.components);
 			const schema = {
 				...builderRef.current.instance.form,
 			};
@@ -37,9 +42,19 @@ const FormBuilder = (props) => {
 	};
 
 	const builderEvents = [
-		{ name: 'saveComponent', action: (component, original, parent, path, index, isNew) => {
-			emit('onSaveComponent')({component, original, parent, path, index, isNew})
-		}},
+		{
+			name: 'saveComponent',
+			action: (component, original, parent, path, index, isNew) => {
+				emit('onSaveComponent')({
+					component,
+					original,
+					parent,
+					path,
+					index,
+					isNew,
+				});
+			},
+		},
 		{ name: 'updateComponent', action: emit('onUpdateComponent') },
 		{ name: 'removeComponent', action: emit('onDeleteComponent') },
 		{ name: 'cancelComponent', action: emit('onUpdateComponent') },
@@ -47,9 +62,12 @@ const FormBuilder = (props) => {
 		{ name: 'addComponent', action: onChange },
 		{ name: 'saveComponent', action: onChange },
 		{ name: 'updateComponent', action: onChange },
-		{ name: 'removeComponent', action: (component, parent, path, index) => {
-			emit('onDeleteComponent')({component, parent, path, index})
-		}},
+		{
+			name: 'removeComponent',
+			action: (component, parent, path, index) => {
+				emit('onDeleteComponent')({ component, parent, path, index });
+			},
+		},
 		{ name: 'deleteComponent', action: onChange },
 		{ name: 'pdfUploaded', action: onChange },
 	];
@@ -98,6 +116,72 @@ const FormBuilder = (props) => {
 			builderRef.current.setForm(form);
 		}
 	}, [form]);
+
+	function iterateConditionsAndSetLogic(components) {
+		// console.log(components);
+		components.forEach((comp) => {
+			if (comp && comp.conditional && comp.conditional.conditions)
+				comp.conditional.conditions.forEach((codition) => {
+					comp.customConditional = createCustomConditions(
+						codition.component,
+						codition.operator,
+						codition.value,
+						comp.customConditional,
+					);
+					console.log(comp.customConditional);
+				});
+			if (comp.customConditional && !comp.customConditional.endsWith(';'))
+				comp.customConditional = comp.customConditional.concat(';');
+		});
+		return components;
+	}
+
+	function createCustomConditions(
+		component,
+		operator,
+		value,
+		existingCustomConditional,
+	) {
+		let condition = '';
+		let fullCondition = existingCustomConditional
+			? existingCustomConditional
+			: '';
+		switch (operator) {
+			case 'isEqual':
+				condition = `data.${component} && data.${component} == '${value}'`;
+				break;
+			case 'isNotEqual':
+				condition = `data.${component} && data.${component} != '${value}'`;
+				break;
+			case 'isEmpty':
+				condition = `!data.${component}`;
+				break;
+			case 'isNotEmpty':
+				condition = `!!data.${component}`;
+				break;
+			case 'includes':
+				condition = `data.${component} && data.${component}.includes('${value}')`;
+				break;
+			case 'notIncludes':
+				condition = `data.${component} && !data.${component}.includes('${value}')`;
+				break;
+			case 'endsWith':
+				condition = `data.${component} && data.${component}.endsWith('${value}')`;
+				break;
+			default:
+				break;
+		}
+		console.log('existingCustomConditional->', existingCustomConditional);
+		if (existingCustomConditional) {
+			if (existingCustomConditional.endsWith(';'))
+				fullCondition =
+					existingCustomConditional.slice(0, -1) + ' && ' + condition;
+			else fullCondition = existingCustomConditional + ' && ' + condition;
+		} else {
+			fullCondition = `show = ${condition}`;
+		}
+		return fullCondition;
+	}
 
 	return (
 		<div>
