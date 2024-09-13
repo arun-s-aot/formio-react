@@ -10,13 +10,13 @@ To see an example application of how to implement all the components and modules
 
 ### npm
 
-`@arun-s-aot/formio-reactt` can be used on the server, or bundled for the client using an
+`@aot-technologies/formio-react` can be used on the server, or bundled for the client using an
 npm-compatible packaging system such as [Browserify](http://browserify.org/) or
 [webpack](http://webpack.github.io/).
 
 ```
-npm install @arun-s-aot/formio-react --save
-npm install @arun-s-aot/formiojs --save // Install @formio/js since it is a peerDependency
+npm install @aot-technologies/formio-react --save
+npm install @aot-technologies/formiojs --save // Install @formio/js since it is a peerDependency
 ```
 
 ## Components
@@ -62,7 +62,7 @@ Give `Form` a `src` property and render:
 ```javascript
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Form } from '@arun-s-aot/formio-react';
+import { Form } from '@aot-technologies/formio-react';
 ```
 
 ```javascript
@@ -77,7 +77,7 @@ ReactDOM.render(
 The FormBuilder class can be used to embed a form builder directly in your react application. Please note that you'll need to include the CSS for the form builder from formio.js as well.
 
 ```javascript
-import { FormBuilder } from '@arun-s-aot/formio-react';
+import { FormBuilder } from '@aot-technologies/formio-react';
 ```
 
 Without Components:
@@ -138,7 +138,7 @@ Please note that the FormBuilder component does not load and save from/to a url.
 ```javascript
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { FormBuilder } from '@arun-s-aot/formio-react';
+import { FormBuilder } from '@aot-technologies/formio-react';
 ```
 
 ```javascript
