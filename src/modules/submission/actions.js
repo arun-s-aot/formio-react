@@ -1,4 +1,4 @@
-import { Formio as Formiojs } from '@arun-s-aot/formiojs/lib';
+import { Formio as Formiojs } from '@aot-technologies/formiojs/lib';
 
 import * as types from './constants';
 
